@@ -1,8 +1,30 @@
 package com.example.learningspring;
 
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class BookResource {
+
+    @Autowired
+    private BookService bookService;
+
+    @GetMapping("/books")
+    public List<Book> getAllBooks(){
+        return bookService.findAllBooks();
+    }
+
+    @GetMapping("/books/{bookId}")
+    public Book retrieveBook(@PathVariable int bookId){
+        return bookService.findBook(bookId);
+    }
+
+    @PostMapping("/books")
+    public void createBook(@RequestBody Book book){
+        Book saveBook = bookService.addBook(book);
+
+    }
 }

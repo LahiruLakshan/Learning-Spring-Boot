@@ -22,7 +22,12 @@ public class BookResource {
 
     @GetMapping("/books/{bookId}")
     public Book retrieveBook(@PathVariable int bookId){
-        return bookService.findBook(bookId);
+        Book book = bookService.findBook(bookId);
+        if (book == null){
+            throw new BookNotFoundException("Book ID : " + bookId);
+        }
+        return book;
+
     }
 
     @PostMapping("/books")
